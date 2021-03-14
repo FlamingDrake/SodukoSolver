@@ -63,6 +63,21 @@ namespace SodukoSolver.UnitTests
             sut.IsValid().Should().BeFalse();
         }
 
+        [Fact]
+        public void SolveShouldFailIfDataIsInvalid()
+        {
+            // Arrange
+            var puzzle = new Puzzle();
+            
+            // Act
+            puzzle.Load("..\\..\\..\\InvalidSudoku.txt");
+            var sut = puzzle.Solve();
+
+            // Assert
+            sut.IsSolved().Should().BeFalse();
+            sut.IsValid().Should().BeFalse();
+        }
+
         public void Dispose()
         {
             if (File.Exists("..\\..\\..\\Temp.txt"))
