@@ -70,10 +70,11 @@ namespace SodukoSolver
                         }
                         break;
                     case Command.Help:
-                        Console.WriteLine("HERE IS HELP");
+                        Help();
                         break;
                     case Command.UnknownCommand:
-                        Console.WriteLine("Unknown command, please type help to list available commands.");
+                        Console.WriteLine("Unknown command");
+                        Help();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -129,6 +130,15 @@ namespace SodukoSolver
             }
 
             return Command.UnknownCommand;
+        }
+
+        private static void Help()
+        {
+            Console.WriteLine("Available commands are:");
+            Console.WriteLine("   load");
+            Console.WriteLine("   save");
+            Console.WriteLine("   solve");
+            Console.WriteLine("   exit");
         }
     }
 }
