@@ -1,9 +1,11 @@
+using System;
+using System.IO;
 using FluentAssertions;
 using Xunit;
 
 namespace SodukoSolver.UnitTests
 {
-    public class PuzzleTest
+    public class PuzzleTest : IDisposable
     {
         [Fact]
         public void LoadShouldLoadFile()
@@ -16,6 +18,20 @@ namespace SodukoSolver.UnitTests
 
             // Assert
             // Not throw exception.
+        }
+
+        [Fact]
+        public void SaveShouldSaveFile()
+        {
+            // Arrange
+            var puzzle = new Puzzle();
+
+            // Act
+            puzzle.Load("..\\..\\..\\TestSudoku.txt");
+            puzzle.Save("..\\..\\..\\Temp.txt");
+
+            // Assert
+            File.Exists("..\\..\\..\\Temp.txt").Should().BeTrue();
         }
 
         [Fact]
@@ -45,6 +61,14 @@ namespace SodukoSolver.UnitTests
             // Assert
             sut.IsSolved().Should().BeTrue();
             sut.IsValid().Should().BeFalse();
+        }
+
+        public void Dispose()
+        {
+            if (File.Exists("..\\..\\..\\Temp.txt"))
+            {
+                File.Delete("..\\..\\..\\Temp.txt");
+            }
         }
     }
 }
