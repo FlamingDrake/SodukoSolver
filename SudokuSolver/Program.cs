@@ -64,6 +64,10 @@ namespace SodukoSolver
                         Console.WriteLine(_puzzle.IsSolved()
                             ? "Sudoku solved successfully."
                             : "A solution was not found. Please try with another puzzle.");
+                        if (!_puzzle.IsValid())
+                        {
+                            Console.WriteLine("This is not a valid sudoku. Multiple answers exist.");
+                        }
                         break;
                     case Command.Help:
                         Console.WriteLine("HERE IS HELP");
