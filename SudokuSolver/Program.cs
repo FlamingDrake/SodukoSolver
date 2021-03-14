@@ -5,9 +5,11 @@ namespace SodukoSolver
 {
     class Program
     {
+        private static IPuzzle _puzzle;
+        
         static void Main(string[] args)
         {
-            var puzzleSolver = new Puzzle();
+            Configure();
             
             var running = true;
             while (running)
@@ -27,9 +29,9 @@ namespace SodukoSolver
                         {
                             try
                             {
-                                puzzleSolver.Load(pathToFile);
+                                _puzzle.Load(pathToFile);
                                 Console.WriteLine($"{pathToFile} loaded successfully.");
-                                if (!puzzleSolver.IsValid())
+                                if (!_puzzle.IsValid())
                                 {
                                     Console.WriteLine("WARN: There are too few digits to accurately solve this puzzle");
                                 }
@@ -48,7 +50,7 @@ namespace SodukoSolver
                     case Command.Save:
                         if (FormattedCorrectly(commandString, out var pathToSaveFile))
                         {
-                            puzzleSolver.Save(pathToSaveFile);
+                            _puzzle.Save(pathToSaveFile);
                             Console.WriteLine($"{pathToSaveFile} saved successfully.");
                         }
                         else
@@ -58,8 +60,8 @@ namespace SodukoSolver
                         }
                         break;
                     case Command.Solve:
-                        puzzleSolver.Solve();
-                        Console.WriteLine(puzzleSolver.IsSolved()
+                        _puzzle.Solve();
+                        Console.WriteLine(_puzzle.IsSolved()
                             ? "Sudoku solved successfully."
                             : "A solution was not found. Please try with another puzzle.");
                         break;
@@ -73,6 +75,14 @@ namespace SodukoSolver
                         throw new ArgumentOutOfRangeException();
                 }
             }
+        }
+
+        /// <summary>
+        /// Poor man dependency injection.
+        /// </summary>
+        private static void Configure()
+        {
+            _puzzle = new Puzzle();
         }
 
         private static bool FormattedCorrectly(string commandString, out string pathToFile)

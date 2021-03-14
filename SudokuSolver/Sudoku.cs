@@ -35,7 +35,7 @@ namespace SodukoSolver
         
         public int[,] SudokuGrid { get; }
 
-        public bool IsValid { get; } = true;
+        public bool IsValid { get; set; } = true;
 
         /// <summary>
         /// Tries to insert <paramref name="number"/> at {<paramref name="row"/>,<paramref name="line"/>}

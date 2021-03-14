@@ -31,5 +31,20 @@ namespace SodukoSolver.UnitTests
             // Assert
             sut.IsSolved().Should().BeTrue();
         }
+        
+        [Fact]
+        public void EmptySudokuShouldYieldInvalidSolution()
+        {
+            // Arrange
+            var puzzle = new Puzzle();
+            
+            // Act
+            puzzle.Load("..\\..\\..\\EmptySudoku.txt");
+            var sut = puzzle.Solve();
+
+            // Assert
+            sut.IsSolved().Should().BeTrue();
+            sut.IsValid().Should().BeFalse();
+        }
     }
 }

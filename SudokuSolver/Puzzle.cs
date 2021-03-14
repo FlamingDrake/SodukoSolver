@@ -10,10 +10,13 @@ namespace SodukoSolver
         private Sudoku _sudoku;
 
         private bool _isSolved;
+
+        private int _numberOfSolutions;
         
         public Puzzle()
         {
             _isSolved = false;
+            _numberOfSolutions = 0;
         }
 
         public bool IsSolved()
@@ -28,7 +31,16 @@ namespace SodukoSolver
 
         public IPuzzle Solve()
         {
-            _isSolved = Solve(0, 0);
+            Solve(0, 0);
+            if (_numberOfSolutions > 0)
+            {
+                _isSolved = true;
+            }
+
+            if (_numberOfSolutions > 1)
+            {
+                _sudoku.IsValid = false;
+            }
             return this;
         }
 
@@ -70,7 +82,8 @@ namespace SodukoSolver
             
             if (row == PuzzleSize)
             {
-                return true;
+                _numberOfSolutions++;
+                return _numberOfSolutions > 1;
             }
 
             if (_sudoku.SudokuGrid[row, line] != 0)
