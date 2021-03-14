@@ -40,6 +40,10 @@ namespace SodukoSolver
                             {
                                 Console.WriteLine("File was not found. Please check filepath");
                             }
+                            catch (ArgumentException)
+                            {
+                                Console.WriteLine("Invalid input. Please check the file.");
+                            }
                         }
                         else
                         {
