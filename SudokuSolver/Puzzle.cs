@@ -5,6 +5,8 @@ namespace SodukoSolver
 {
     public class Puzzle : IPuzzle
     {
+        private const int PuzzleSize = 9;
+        
         private Sudoku _sudoku;
 
         private bool _isSolved;
@@ -52,21 +54,21 @@ namespace SodukoSolver
 
             using var sw = new StreamWriter(path);
 
-            for (var i = 0; i < 9; i++)
+            for (var i = 0; i < PuzzleSize; i++)
             {
-                sw.WriteLine(saveString.Substring(i * 9, 9));
+                sw.WriteLine(saveString.Substring(i * PuzzleSize, PuzzleSize));
             }
         }
         
         private bool Solve(int row, int line)
         {
-            if (line == 9)
+            if (line == PuzzleSize)
             {
                 row += 1;
                 line = 0;
             }
             
-            if (row == 9)
+            if (row == PuzzleSize)
             {
                 return true;
             }
@@ -76,7 +78,7 @@ namespace SodukoSolver
                 return Solve(row, line + 1);
             }
 
-            for (var i = 1; i < 10; i++)
+            for (var i = 1; i <= PuzzleSize; i++)
             {
                 if (_sudoku.Insert(row, line, i))
                 {

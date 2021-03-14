@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace SodukoSolver
 {
@@ -24,11 +25,18 @@ namespace SodukoSolver
                     case Command.Load:
                         if (FormattedCorrectly(commandString, out var pathToFile))
                         {
-                            puzzleSolver.Load(pathToFile);
-                            Console.WriteLine($"{pathToFile} loaded successfully.");
-                            if (!puzzleSolver.IsValid())
+                            try
                             {
-                                Console.WriteLine("WARN: There are too few digits to accurately solve this puzzle");
+                                puzzleSolver.Load(pathToFile);
+                                Console.WriteLine($"{pathToFile} loaded successfully.");
+                                if (!puzzleSolver.IsValid())
+                                {
+                                    Console.WriteLine("WARN: There are too few digits to accurately solve this puzzle");
+                                }
+                            }
+                            catch (FileNotFoundException)
+                            {
+                                Console.WriteLine("File was not found. Please check filepath");
                             }
                         }
                         else
